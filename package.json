@@ -5,7 +5,8 @@
   "main": "release/index.js",
   "scripts": {
     "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' ./src/index.ts",
-    "build": "tsc && node ./release/app.js",
+    "build": "tsc",
+    "start": "node ./release/app.js",
     "test": "nyc mocha --exit --config=test/.mocha.yml 'test/**/*.test.ts'",
     "test:watch": "mocha --watch --watch-extensions ts --opts test/mocha.opts 'test/**/*.test.ts'",
     "cover": "nyc report --reporter=text-lcov | coveralls",
