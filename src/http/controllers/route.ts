@@ -1,6 +1,6 @@
 import { BaseController } from './controller';
 import { AppContainer } from '../../container';
-import { Controller, Post } from '../decorators';
+import { Controller, Post, Get } from '../decorators';
 import { Request, Response, NextFunction } from 'express';
 import { CreateDTO } from '../dto/route';
 import { validatorMiddleware } from '../middlewares/validator';
@@ -22,6 +22,15 @@ export class RouteController extends BaseController {
 
       const route = await this.routeService.create(data);
       res.status(201).send(route);
+    } catch (err) {
+      next(err);
+    }
+  }
+  @Get('/')
+  async listAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const route = await this.routeService.listAll();
+      res.send(route);
     } catch (err) {
       next(err);
     }

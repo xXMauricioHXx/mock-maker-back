@@ -8,18 +8,17 @@ export class RouteService {
   constructor(@inject() protected readonly routeRepository: RouteRepository) {}
 
   async create(data: CreateDTO): Promise<Route | null> {
-    try {
-      const { response } = data;
+    const { response } = data;
 
-      const routeId = await this.routeRepository.create({
-        ...data,
-        response: JSON.stringify(response),
-      });
+    const routeId = await this.routeRepository.create({
+      ...data,
+      response: JSON.stringify(response),
+    });
 
-      return await this.routeRepository.getById(routeId);
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
+    return await this.routeRepository.getById(routeId);
+  }
+
+  listAll(): Promise<Route[]> {
+    return this.routeRepository.all();
   }
 }
