@@ -5,3 +5,9 @@ export const createSchema = Joi.object({
     name: Joi.string().required(),
   }),
 });
+
+export const deleteSchema = Joi.object({
+  params: Joi.object({
+    id: Joi.string().required(),
+  }),
+});

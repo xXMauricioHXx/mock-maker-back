@@ -1,7 +1,7 @@
-import { provide, inject } from "injection";
-import { ProjectRepository } from "../repositories/project";
-import { CreateDTO } from "../../http/dto/project";
-import { Project } from "../../types";
+import { provide, inject } from 'injection';
+import { ProjectRepository } from '../repositories/project';
+import { CreateDTO } from '../../http/dto/project';
+import { Project } from '../../types';
 
 @provide()
 export class ProjectService {
@@ -16,5 +16,9 @@ export class ProjectService {
 
   async listAll(): Promise<Project[]> {
     return this.projectRepository.all();
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.projectRepository.deleteById(id);
   }
 }
