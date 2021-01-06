@@ -18,7 +18,10 @@ export class RouteService {
     return await this.routeRepository.getById(routeId);
   }
 
-  listAll(): Promise<Route[]> {
+  listAll(projectId?: string): Promise<Route[]> {
+    if (projectId) {
+      return this.routeRepository.getByProjectId(projectId);
+    }
     return this.routeRepository.all();
   }
 }

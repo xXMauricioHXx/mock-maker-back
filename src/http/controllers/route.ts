@@ -4,7 +4,7 @@ import { Controller, Post, Get } from '../decorators';
 import { Request, Response, NextFunction } from 'express';
 import { CreateDTO } from '../dto/route';
 import { validatorMiddleware } from '../middlewares/validator';
-import { createSchema } from '../schemas/route';
+import { createSchema, listAllSchema } from '../schemas/route';
 import { RouteService } from '../../container/services/route';
 
 @Controller('/route')
@@ -26,10 +26,11 @@ export class RouteController extends BaseController {
       next(err);
     }
   }
-  @Get('/')
+  @Get('/', [validatorMiddleware(listAllSchema)])
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const route = await this.routeService.listAll();
+      const { projectId } = req.query as any;
+      const route = await this.routeService.listAll(projectId);
       res.send(route);
     } catch (err) {
       next(err);

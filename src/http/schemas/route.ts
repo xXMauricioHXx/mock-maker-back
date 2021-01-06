@@ -12,3 +12,9 @@ export const createSchema = Joi.object({
     projectId: Joi.string().required(),
   }),
 });
+
+export const listAllSchema = Joi.object({
+  query: Joi.object({
+    projectId: Joi.string(),
+  }),
+});
