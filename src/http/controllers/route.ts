@@ -73,6 +73,7 @@ export class RouteController extends BaseController {
       await this.routeService.updateById(id, req.body);
       res.sendStatus(204);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

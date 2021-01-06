@@ -34,6 +34,14 @@ export class RouteService {
   }
 
   async updateById(id: string, data: Partial<Route>): Promise<void> {
-    await this.routeRepository.updateById(id, data);
+    let completedData: any = data;
+
+    if (data.response) {
+      completedData = {
+        ...completedData,
+        response: JSON.stringify(data.response),
+      };
+    }
+    await this.routeRepository.updateById(id, completedData);
   }
 }
