@@ -19,6 +19,12 @@ export const listAllSchema = Joi.object({
   }),
 });
 
+export const listByIdSchema = Joi.object({
+  params: Joi.object({
+    id: Joi.string(),
+  }),
+});
+
 export const deleteSchema = Joi.object({
   params: Joi.object({
     id: Joi.string().required(),

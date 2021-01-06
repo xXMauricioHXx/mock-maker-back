@@ -4,7 +4,12 @@ import { Controller, Post, Get, Delete } from '../decorators';
 import { Request, Response, NextFunction } from 'express';
 import { CreateDTO } from '../dto/route';
 import { validatorMiddleware } from '../middlewares/validator';
-import { createSchema, listAllSchema, deleteSchema } from '../schemas/route';
+import {
+  createSchema,
+  listAllSchema,
+  deleteSchema,
+  listByIdSchema,
+} from '../schemas/route';
 import { RouteService } from '../../container/services/route';
 
 @Controller('/route')
@@ -32,6 +37,17 @@ export class RouteController extends BaseController {
     try {
       const { projectId } = req.query as any;
       const route = await this.routeService.listAll(projectId);
+      res.send(route);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  @Get('/:id', [validatorMiddleware(listByIdSchema)])
+  async listById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const route = await this.routeService.listById(id);
       res.send(route);
     } catch (err) {
       next(err);

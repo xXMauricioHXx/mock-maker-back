@@ -25,6 +25,10 @@ export class RouteService {
     return this.routeRepository.all();
   }
 
+  listById(id: string): Promise<Route | null> {
+    return this.routeRepository.getById(id);
+  }
+
   async deleteById(id: string): Promise<void> {
     await this.routeRepository.deleteById(id);
   }
