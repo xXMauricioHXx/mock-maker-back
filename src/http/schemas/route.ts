@@ -30,3 +30,15 @@ export const deleteSchema = Joi.object({
     id: Joi.string().required(),
   }),
 });
+
+export const updateSchema = Joi.object({
+  params: Joi.object({
+    id: Joi.string().required(),
+  }),
+  body: Joi.object({
+    method: Joi.string().valid(...Object.values(RouteMethod)),
+    uri: Joi.string(),
+    statusCode: Joi.number(),
+    response: Joi.object(),
+  }),
+});

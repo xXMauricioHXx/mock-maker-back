@@ -32,4 +32,8 @@ export class RouteService {
   async deleteById(id: string): Promise<void> {
     await this.routeRepository.deleteById(id);
   }
+
+  async updateById(id: string, data: Partial<Route>): Promise<void> {
+    await this.routeRepository.updateById(id, data);
+  }
 }

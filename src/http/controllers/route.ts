@@ -1,6 +1,6 @@
 import { BaseController } from './controller';
 import { AppContainer } from '../../container';
-import { Controller, Post, Get, Delete } from '../decorators';
+import { Controller, Post, Get, Delete, Put } from '../decorators';
 import { Request, Response, NextFunction } from 'express';
 import { CreateDTO } from '../dto/route';
 import { validatorMiddleware } from '../middlewares/validator';
@@ -8,6 +8,7 @@ import {
   createSchema,
   listAllSchema,
   deleteSchema,
+  updateSchema,
   listByIdSchema,
 } from '../schemas/route';
 import { RouteService } from '../../container/services/route';
@@ -59,6 +60,17 @@ export class RouteController extends BaseController {
     try {
       const { id } = req.params;
       await this.routeService.deleteById(id);
+      res.sendStatus(204);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  @Put('/:id', [validatorMiddleware(updateSchema)])
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      await this.routeService.updateById(id, req.body);
       res.sendStatus(204);
     } catch (err) {
       next(err);
