@@ -24,4 +24,8 @@ export class RouteService {
     }
     return this.routeRepository.all();
   }
+
+  async deleteById(id: string): Promise<void> {
+    await this.routeRepository.deleteById(id);
+  }
 }
