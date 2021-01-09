@@ -8,7 +8,7 @@ export const createSchema = Joi.object({
       .required(),
     uri: Joi.string().required(),
     statusCode: Joi.number().required(),
-    response: Joi.object().required(),
+    response: Joi.any().required(),
     projectId: Joi.string().required(),
   }),
 });

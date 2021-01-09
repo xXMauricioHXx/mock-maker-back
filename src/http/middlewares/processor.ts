@@ -8,10 +8,15 @@ import { ErrorRepository } from '../../container/repositories/error';
 import { RuleRepository } from '../../container/repositories/rule';
 
 export const processor = (container: AppContainer) => async (
+  err: any,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  if (err) {
+    return next(err);
+  }
+
   const projectRepository = container.get<ProjectRepository>(ProjectRepository);
   const routeRepository = container.get<RouteRepository>(RouteRepository);
   const routeErrorRepository = container.get<RouteErrorRepository>(
@@ -26,7 +31,7 @@ export const processor = (container: AppContainer) => async (
   const project = await projectRepository.getByName(projectName);
 
   if (!project) {
-    next();
+    return next();
   }
 
   const routes = await routeRepository.getByProjectId(project!.id);
@@ -36,7 +41,7 @@ export const processor = (container: AppContainer) => async (
   );
 
   if (!route) {
-    next();
+    return next();
   }
 
   const routeErrors = await routeErrorRepository.getByRouteId(route!.id);
@@ -76,7 +81,7 @@ export const processor = (container: AppContainer) => async (
     } else {
       res.status(route!.statusCode).send(route!.response);
     }
-    next();
+    return next();
   }
 };
 

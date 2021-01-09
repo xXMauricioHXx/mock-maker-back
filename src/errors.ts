@@ -55,3 +55,9 @@ export class ValidationError extends BadRequest {
     super('VALIDATION_FAILED', 'Invalid request data', details);
   }
 }
+
+export class RouteAlreadyExistsError extends BadRequest {
+  constructor(details?: Record<string, any>) {
+    super('ROUTE_ALREADY_EXISTS', 'Rota já cadastrada');
+  }
+}

@@ -133,8 +133,6 @@ export class HttpServer {
       });
     });
 
-    app.use(expressLogger.onError.bind(expressLogger));
-    app.use(expressLogger.onSuccess.bind(expressLogger));
     app.use(processor(this.container));
 
     app.use(

@@ -2,20 +2,29 @@ import { provide, inject } from 'injection';
 import { CreateDTO } from '../../http/dto/route';
 import { RouteRepository } from '../repositories/route';
 import { Route } from '../../types';
+import { RouteAlreadyExistsError } from '../../errors';
+import { RoutesErrorCode } from '../../enums';
 
 @provide()
 export class RouteService {
   constructor(@inject() protected readonly routeRepository: RouteRepository) {}
 
   async create(data: CreateDTO): Promise<Route | null> {
-    const { response } = data;
+    try {
+      const { response } = data;
+      const routeId = await this.routeRepository.create({
+        ...data,
+        response: JSON.stringify(response),
+      });
 
-    const routeId = await this.routeRepository.create({
-      ...data,
-      response: JSON.stringify(response),
-    });
+      return await this.routeRepository.getById(routeId);
+    } catch (err) {
+      if (err.code === RoutesErrorCode.AlreadyExist) {
+        throw new RouteAlreadyExistsError();
+      }
 
-    return await this.routeRepository.getById(routeId);
+      throw err;
+    }
   }
 
   listAll(projectId?: string): Promise<Route[]> {

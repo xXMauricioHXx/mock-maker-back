@@ -25,7 +25,6 @@ export class RouteController extends BaseController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const data: CreateDTO = req.body;
-
       const route = await this.routeService.create(data);
       res.status(201).send(route);
     } catch (err) {
