@@ -15,4 +15,24 @@ export class RuleService {
     });
     return this.ruleRepository.getById(ruleId);
   }
+
+  listAll(): Promise<Rule[]> {
+    return this.ruleRepository.all();
+  }
+
+  listById(id: string): Promise<Rule | null> {
+    return this.ruleRepository.getById(id);
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.ruleRepository.deleteById(id);
+  }
+
+  async updateById(id: string, data: Partial<Rule>): Promise<void> {
+    const { rule } = data;
+    await this.ruleRepository.updateById(id, {
+      ...data,
+      rule: JSON.stringify(rule),
+    });
+  }
 }
