@@ -12,7 +12,12 @@ export class ErrorService {
     return await this.errorRepository.getById(errorId);
   }
 
-  listAll(): Promise<Error[]> {
+  async listAll(routeId?: string): Promise<Error[]> {
+    if (routeId) {
+      const errors = await this.errorRepository.listErrorsByRouteId(routeId);
+      return errors || [];
+    }
+
     return this.errorRepository.all();
   }
 

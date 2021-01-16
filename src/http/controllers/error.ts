@@ -9,6 +9,7 @@ import {
   listByIdSchema,
   deleteSchema,
   updateSchema,
+  listAllSchema,
 } from '../schemas/error';
 import { ErrorService } from '../../container/services/error';
 
@@ -31,10 +32,11 @@ export class ErrorController extends BaseController {
     }
   }
 
-  @Get('/')
+  @Get('/', [validatorMiddleware(listAllSchema)])
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const errors = await this.errorService.listAll();
+      const routeId = req.query.routeId as string;
+      const errors = await this.errorService.listAll(routeId);
       res.send(errors);
     } catch (err) {
       next(err);
